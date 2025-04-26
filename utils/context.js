@@ -139,12 +139,12 @@ const NextProvider = ({ children }) => {
   const editPost = async (id) => {
    const res = await fetch(`api/post/${id}`)
    const data = await res.json()
-  setIsEditting(true)
-   router.push('/Edit')
    setEdit({
    post: data.post,
     tag: data.tag
    })
+   setIsEditting(true)
+   router.push('/Edit')
 }
 
   const submitEditPost = async () => {
