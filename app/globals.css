@@ -1,0 +1,240 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.hero{
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  gap:10px;
+  justify-content: center;
+  align-items: center;
+  background: #2196f340;
+}
+.hero h2{
+  
+}
+.hero p{
+  font-size: 13px;
+}
+.hero button{
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #ffc107;
+}
+.hero button a{
+  text-decoration: none;
+  color: black;
+}
+.search-input{
+  display: flex;
+  padding: 20px 30px;
+  height: 50px;
+}
+.search-input div{
+  width: 100%;
+}
+.search-input div input{
+  width: 75%;
+  padding: 5px;
+  outline: none;
+}
+.search-input div button{
+  width: 25%;
+  padding: 5px;
+  border: none;
+  background: #2196f340;
+}
+.tags{
+  padding: 10px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.tags div{
+  width: 100%;
+}
+.tags button{
+  border-radius: 10px;
+  border: none;
+  background: #ccc;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+.posts{
+  display: grid;
+  padding: 10px 20px;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: space-between;
+}
+form{
+  width: 100%;
+  padding: 10px 30px;
+}
+textarea{
+  width: 100%;
+  height: 250px;
+  border-radius: 10px;
+  padding: 5px;
+  border: 0.5px solid black;
+}
+form input{
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  padding: 5px;
+  border: 0.5px solid black;
+}
+form div{
+  display:flex ;
+  justify-content:end;
+  margin: 10px 0;
+}
+form div button{
+  padding: 5px 10px;
+  border: none;
+  border-radius: 10px;
+  color: black;
+  background: #ffc107;
+}
+.detailedPost{
+  padding: 20px 40px;
+}
+.detailedPost-creator{
+  display: flex;
+  gap: 10px;
+}
+.detailedPost-image{
+  width: 15%;
+}
+.detailedPost-details{
+  width: 85%;
+}
+.detailedPost-details p{
+  font-size: 12px;
+}
+.detailedPost-post{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0;
+}
+.detailedPost-post p{
+  text-align: justify;
+  font-size: 12px;
+}
+.detailedPost-post span{
+  font-size: 12px;
+  font-weight: bold;
+}
+.detailedPost-comment{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.comment-input{
+  width: 100%;
+}
+.comment-input input{
+  width: 80%;
+  height: 35px;
+  border: 0.5px solid black;
+}
+.comment-input button{
+  height: 35px;
+  border: 0.5px solid #2196f340;
+  background: white;
+  color: #2196f340;
+}
+.comments{
+  display: grid;
+  grid-template-columns: (1, 1fr);
+  gap: 10px;
+}
+.comment{
+  width: 100%;
+  padding: 10px 5px;
+  border: 0.5px solid black;
+  border-radius: 15px;
+}
+.profileHero{
+  height: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.tab{
+  display: flex;
+  justify-content: space-around;
+}
+.tab button{
+  background: none;
+  border: none;
+  font-size: 15px;
+  padding: 5px;
+}
+.tab button:active{
+  color: #2196f340;
+  border-bottom: 1px solid #2196f340;
+}
+.noPost{
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.noPost p{
+  color: #ccc;
+  font-size: 15px;
+}
+.userPost{
+  padding: 10px 30px;
+}
+.userPost h5{
+  text-align: center;
+}
+.profilePosts{
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: space-between;
+}
+@media screen and (max-width: 480px) { 
+.hero{
+  height: 200px;
+  text-align: center;
+}
+.tags{
+  padding: 10px 20px;
+}
+  .posts{
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
+    padding: 20px;
+  }
+  form{
+  padding: 10px 20px;
+}
+.detailedPost{
+  padding: 20px;
+}
+.profileHero{
+  height: 200px;
+}
+.profilePosts{
+  grid-template-columns: repeat(1, 1fr);
+  gap: 10px;
+}
+.userPost{
+  padding: 10px 20px;
+}
+}

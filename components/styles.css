@@ -1,0 +1,110 @@
+.navbar{
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background: #2196f340;
+}
+.navbar a{
+  text-decoration: none;
+}
+.navbar div{
+  gap: 10px;
+}
+.logo a{
+  font-size: 16px;
+  color: #ffc107;
+}
+.logo a span{
+  font-weight: bold;
+}
+.register-btn{
+  padding: 5px 10px;
+  border: none;
+  border-radius: 15px;
+  color: black;
+  background: #ffc107;
+}
+.profilenav{
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+.profilenav div button{
+  border: none;
+  background: none;
+  font-size: 20px;
+}
+.profilenav div p{
+  font-weight: bold;
+  font-size: 16px;
+}
+.post{
+  width: 300px;
+  padding: 10px;
+  box-shadow: 2px 2px 5px #ccc;
+}
+.creator{
+  width: 100%;
+  display: flex;
+  gap: 5px;
+}
+.creator-image{
+  width: 15%;
+}
+.creator-details{
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.creator-details h6{
+  text-transform: capitalize;
+}
+.creator-details p{
+  font-size: 11px;
+  color: #ccc;
+}
+.creator-post p{
+  font-size: 12px;
+}
+.creator-post button{
+  background: none;
+  border: none;
+  color: red;
+  font-size: 12px;
+}
+.post-details{
+  display: flex;
+  justify-content: space-between;
+}
+.post-details p{
+  font-size: 10px;
+  color: #ccc;
+}
+.btns{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.btns button{
+  border: none;
+  background: none;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+.edit-btn{
+  color: blue;
+}
+.delete-btn{
+  color: red;
+}
+@media screen and (max-width: 480px) {
+  .post{
+   width: 100%; 
+  }
+} 
