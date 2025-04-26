@@ -24,8 +24,8 @@ const PostCard = ({post, fetchPostDetails, editPost, deletePost}) => {
              alt='profile'/>}
         </div>
         <div className='creator-details'>
-          <h6>{post.creator.username}</h6>
-          <p>{post.creator.email}</p>
+          <h6>{post.creator?.username}</h6>
+          <p>{post.creator?.email}</p>
         </div>
       </div>
       <div className='creator-post'>

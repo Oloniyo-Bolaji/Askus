@@ -21,7 +21,7 @@ const Create = () => {
        <p>Let your thoughts reach a larger audience and see what they have to say about it.</p>
       </div>
       
-      <form onSubmit={isEditting? submitEditPost : handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <textarea
            type='text'
            placeholder='Write a post'

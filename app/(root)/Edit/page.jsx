@@ -1,19 +1,31 @@
 'use client'
 
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useEffect, useContext, use} from 'react'
 import {auth} from '@utils/firebase'
 import {NextContext} from '@/utils/context.js'
 import '../../globals.css'
    
-const Edit = () => {
+const Edit = ({params}) => {
+  const unwrapped = use(params)
+  const postId = unwrapped.id
   
   const { editPost, edit, setEdit,  isEditting, submitEditPost } = useContext(NextContext)
   
     const handleSubmit = async (e) => {
     e.preventDefault()
-    await submitEditPost()
+    await submitEditPost(postId)
   }
-  
+  useEffect(() => {
+   const getEditting = async () => {
+     const res = await fetch(`api/post/${postId}`)
+     const data = await res.json()
+     setEdit({
+       post: data.post,
+       tag: data.tag
+   })
+   }
+ }, [postId])
+ 
   return(
     <div>
       <div className='hero'>
@@ -25,14 +37,13 @@ const Edit = () => {
         <textarea
            type='text'
            placeholder='Write a post'
-           value={edit.post}
-           onChange={(e) => {setEdit({...edit, post: e.target.value})}}>
+           value= "of course"
+           >
         </textarea>
         <input
            type='text'
            placeholder='Write a post tag' 
-           value={edit.tag}
-           onChange={(e) => {setEdit({...edit, tag: e.target.value})}}/>
+           />
          <div className='post-btn'>
             <button>Save</button>
           </div>

@@ -40,7 +40,7 @@ export const PATCH = async (req, {params}) => {
 export const DELETE = async (req, { params }) => {
   try {
     await connecttoDb();
-    const deletedPost = await Post.findByIdAndDelete(params.id);
+    const deletedPost = await Post.findByIdAndRemove(params.id);
     if (!deletedPost) {
       return new Response('Post not found', { status: 404 });
     }

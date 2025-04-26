@@ -1,4 +1,6 @@
 'use client'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import Image from "next/image";
 import Link from "next/link";
 import {useState, 
@@ -42,15 +44,14 @@ export default function Home() {
         </div>
       </div>*/}
       
-      <div className='posts'>
-       {posts.map((post, index) => (
-          <PostCard  
-            key={index}
-            post={post}
-            fetchPostDetails={fetchPostDetails}/>
-      ))}
-      </div>
-      
+    <div className="posts">
+     {posts.map((post, index) => (
+      <PostCard
+        key={index} 
+        post={post}
+        fetchPostDetails={fetchPostDetails} />
+    ))}
+   </div>
     </>
   );
 }

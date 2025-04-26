@@ -21,11 +21,11 @@ const Post =  ({params}) => {
   method: 'PATCH',
   body: JSON.stringify({ 
     creator: {
-     uid: signedUpUser.uid,
-     username: signedUpUser.displayName,
-     email: signedUpUser.email,
-     number: signedUpUser.phoneNumber,
-     image:signedUpUser.photoURL
+     uid: signedUpUser?.uid,
+     username: signedUpUser?.displayName,
+     email: signedUpUser?.email,
+     number: signedUpUser?.phoneNumber,
+     image:signedUpUser?.photoURL
         },
     comment: comment
    }),

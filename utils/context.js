@@ -81,21 +81,11 @@ const NextProvider = ({ children }) => {
 };
 
   useEffect(() => {
-  const unsubscribe = onAuthStateChanged(auth, async (user) => {
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
     if (user) {
       setIsUser(true);
       setUserId(user.uid);
-      try {
-        const response = await fetch(`/api/auth/${user.uid}`);
-        if (!response.ok) {
-          throw new Error(`Error fetching user: ${response.status}`);
-        }
-        const data = await response.json();
-        setSignedUpUser(data);
-      } catch (error) {
-        console.log('Error fetching user details:', error);
-        setSignedUpUser(null);
-      }
+      setSignedUpUser(user);
     } else {
       setIsUser(false);
       setUserId('');
@@ -137,17 +127,11 @@ const NextProvider = ({ children }) => {
   }
  
   const editPost = async (id) => {
-   const res = await fetch(`api/post/${id}`)
-   const data = await res.json()
-   setEdit({
-   post: data.post,
-    tag: data.tag
-   })
    setIsEditting(true)
-   router.push('/Edit')
+   router.push(`/Edit?id=${id}`)
 }
-
-  const submitEditPost = async () => {
+ 
+  const submitEditPost = async (id) => {
  try{
   const response = await fetch(`api/post/${id}/edit`, {
   method: 'PATCH',
@@ -169,12 +153,15 @@ const NextProvider = ({ children }) => {
  }
 } 
 
-  const deletePost = async () => {
+  const deletePost = async (id) => {
    try{
-  const response = await fetch(`api/post/${id}/edit`, {
+  const response = await fetch(`api/post/${id}`, {
   method: 'DELETE',
  })
  const data = await response.json()
+   if(response.ok){
+     alert('post deleted')
+   }
  }catch(error){
    console.log(error)
  }

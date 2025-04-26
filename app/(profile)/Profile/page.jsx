@@ -1,5 +1,4 @@
 'use client'
-
 import React, { useState, useEffect, useContext } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -28,31 +27,32 @@ const Profile = () => {
           alt='profile'/>}
        <h4>{signedUpUser?.displayName}</h4>
        </div>
-     <div className='userPost'>
+     <div className="userPost">
        <h5>My Posts</h5>
-       {userPosts.length === 0 ?
-       (
-       <div className='noPost'>
+       {userPosts.length === 0 ? (
+        <div className="noPost">
          <p>You haven't made a post</p>
        </div>
-       ):
-       (
-       <div className='profilePosts'>
-         {userPosts.map((post, index) => {
-          return(
-           <PostCard  
-            key={index}
-             post={post}
-             editPost={editPost}
-             deletePost={deletePost}
-          />
-          )})}
-        </div>
-       )
-       }
-     </div>
+       ) : (
+       <div className="profilePosts">
+        {userPosts.map((post, index) => {
+        return (
+          <PostCard 
+            key={index} 
+            post={post}
+            editPost={editPost} 
+            deletePost={deletePost} />);
+        })}
+       </div>)}
+   </div>
    </div>
   )
 }
 
 export default Profile;
+
+
+
+
+
+
