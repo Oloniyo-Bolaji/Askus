@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, use,useContext } from 'react'
+import React, { useState, useEffect, use, useContext } from 'react';
 import {NextContext} from '@/utils/context.js'
 import Image from 'next/image'
 import '../../globals.css'
@@ -13,9 +13,8 @@ const Post =  ({params}) => {
   const id = unwrapped.id
   
   const {signedUpUser, posted, fetchPostDetails } = useContext(NextContext) 
- 
-
-  const addComment = async () => {
+   
+const addComment = async () => {
  try{
   const response = await fetch(`api/post/${id}`, {
   method: 'PATCH',
@@ -40,7 +39,7 @@ const Post =  ({params}) => {
    console.log(error)
  }
 }
-  
+
   useEffect(() => {
     fetchPostDetails(id)
   }, [id])

@@ -127,6 +127,7 @@ form div button{
 .detailedPost-post p{
   text-align: justify;
   font-size: 12px;
+  line-height: 10px;
 }
 .detailedPost-post span{
   font-size: 12px;
@@ -144,12 +145,14 @@ form div button{
 .comment-input input{
   width: 80%;
   height: 35px;
-  border: 0.5px solid black;
+  box-shadow: 1px 1px 2px #ccc;
+  border: none;
 }
 .comment-input button{
+  width: 20%;
   height: 35px;
-  border: 0.5px solid #2196f340;
-  background: white;
+  border: none;
+  background: none;
   color: #2196f340;
 }
 .comments{
@@ -160,8 +163,7 @@ form div button{
 .comment{
   width: 100%;
   padding: 10px 5px;
-  border: 0.5px solid black;
-  border-radius: 15px;
+  border-bottom: 0.5px solid black;
 }
 .profileHero{
   height: 400px;

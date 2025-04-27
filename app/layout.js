@@ -1,4 +1,4 @@
-import "../globals.css";
+import "./globals.css";
 import Navbar from '@/components/Navbar.jsx'
 import { NextProvider } from '@/utils/context.js'
 

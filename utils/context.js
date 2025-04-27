@@ -26,16 +26,13 @@ const NextProvider = ({ children }) => {
   const [isEditting, setIsEditting] = useState(false)
   const [posts, setPosts] = useState([])
   const [posted, setPosted] = useState({})
-  const [signedUpUser, setSignedUpUser] = useState({})
+  const [signedUpUser, setSignedUpUser] = useState(null)
   
   
   const loginWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
     const user = result.user;
-    setIsUser(true);
-
-    // First, check if user already exists
     const checkUser = await fetch(`/api/auth/${user.uid}`);
     
     if (checkUser.ok) {
@@ -71,7 +68,6 @@ const NextProvider = ({ children }) => {
   const logOut = async () => {
   try {
     await signOut(auth);
-    setIsUser(false);
     setUserId('');
     setSignedUpUser(null);
     console.log('Logged out successfully.');
@@ -80,14 +76,25 @@ const NextProvider = ({ children }) => {
   }
 };
 
+
   useEffect(() => {
-  const unsubscribe = onAuthStateChanged(auth, (user) => {
+  const unsubscribe = onAuthStateChanged(auth, async (user) => {
     if (user) {
-      setIsUser(true);
       setUserId(user.uid);
-      setSignedUpUser(user);
+      try {
+        const response = await fetch(`/api/auth/${user.uid}`);
+        if (response.ok) {
+          const data = await response.json();
+          setSignedUpUser(data);
+        } else {
+          setSignedUpUser(null);
+          console.log('User not found in database.');
+        }
+      } catch (error) {
+        console.error('Failed to fetch user:', error);
+        setSignedUpUser(null);
+      }
     } else {
-      setIsUser(false);
       setUserId('');
       setSignedUpUser(null);
     }
@@ -95,6 +102,7 @@ const NextProvider = ({ children }) => {
 
   return () => unsubscribe();
 }, []);
+
 
   const CreatePost = async () => {
     try{
@@ -205,7 +213,7 @@ const NextProvider = ({ children }) => {
 
 
   return (
-    <NextContext.Provider value={{ isUser, signedUpUser,  loginWithGoogle, logOut, CreatePost, submitting, editPost, deletePost, isEditting, setIsEditting, userPost, setUserPost, userId, posts, userPosts, userComments, posted, fetchPostDetails}}>
+    <NextContext.Provider value={{signedUpUser,  loginWithGoogle, logOut, CreatePost, submitting, editPost, deletePost, isEditting, setIsEditting, userPost, setUserPost, userId, posts, userPosts, userComments, posted, fetchPostDetails}}>
       {children}
     </NextContext.Provider>
   );

@@ -8,7 +8,7 @@ import { FaUser } from "react-icons/fa";
 
 
 const Navbar = () => {
-   const { isUser, loginWithGoogle, logOut } = useContext(NextContext)
+   const { signedUpUser, loginWithGoogle, logOut } = useContext(NextContext)
 
   return (
     <nav className="navbar">
@@ -16,7 +16,7 @@ const Navbar = () => {
         <Link href="/">Ask<span>US</span></Link>
       </div>
       <div>
-        {isUser ? (
+        {signedUpUser ? (
         <div>
           <Link href='/Profile'>
             <FaUser />
