@@ -1,26 +1,23 @@
 import { connecttoDb } from '@utils/database.js';
 import User from '@models/user.js';
 
+export const POST = async (req) => {
+  try {
+    await connecttoDb();
+    const { uid, email, username, number, image } = await req.json();
 
-export const POST = async (req, res) => {
-  if (req.method !== "POST") return res.status(405).end();
-  
-  try {
-    await connecttoDb()
-    const {uid, email, username, number, image} = await req.json()
-    const user = await User.findOne({uid})
-    if(!user){
-      const newUser = new User({uid, email,   
-      username, number, image})
-      await newUser.save()
-    }
-    return new Response(JSON.stringify(newUser), {status: 200})
-  } catch (err) {
-    return new Response('error', {status: 500})
-  }
+    let user = await User.findOne({ uid });
+
+    if (!user) {
+      user = new User({ uid, email, username, number, image });
+      await user.save();
+    }
+
+    return new Response(JSON.stringify(user), { status: 201 }); // created new user
+  } catch (err) {
+    console.error('Error creating user:', err);
+    return new Response('Internal Server Error', { status: 500 });
+  }
 };
-
-
-
 
 
