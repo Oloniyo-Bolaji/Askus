@@ -29,14 +29,16 @@ const NextProvider = ({ children }) => {
   const [signedUpUser, setSignedUpUser] = useState(null)
   
   
-  const loginWithGoogle = async () => {
+
+const loginWithGoogle = async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
     const user = result.user;
     const checkUser = await fetch(`/api/auth/${user.uid}`);
-    
     if (checkUser.ok) {
-      console.log('User already exists.');
+      alert('User already exists.');
+      const data = await checkUser.json();
+      setSignedUpUser(data);
     } else {
       const response = await fetch('/api/auth', {
         method: 'POST',
@@ -51,33 +53,33 @@ const NextProvider = ({ children }) => {
           image: user.photoURL,
         }),
       });
-
       if (response.ok) {
         console.log('New user created and saved to MongoDB.');
         alert('Signed in successfully!');
+        const data = await response.json();
+        setSignedUpUser(data);
       } else {
         console.log('Error saving user:', response.status);
       }
     }
   } catch (err) {
-    console.log('Login error:', err);
+    console.error('Login error:', err);
     alert('Login failed. Please try again.');
   }
 };
 
-  const logOut = async () => {
+const logOut = async () => {
   try {
     await signOut(auth);
     setUserId('');
     setSignedUpUser(null);
     console.log('Logged out successfully.');
   } catch (error) {
-    console.log('Logout error:', error);
+    console.error('Logout error:', error);
   }
 };
 
-
-  useEffect(() => {
+useEffect(() => {
   const unsubscribe = onAuthStateChanged(auth, async (user) => {
     if (user) {
       setUserId(user.uid);
@@ -99,10 +101,8 @@ const NextProvider = ({ children }) => {
       setSignedUpUser(null);
     }
   });
-
   return () => unsubscribe();
 }, []);
-
 
   const CreatePost = async () => {
     try{
