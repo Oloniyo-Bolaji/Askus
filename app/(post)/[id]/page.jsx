@@ -13,7 +13,7 @@ const Post =  ({params}) => {
   const id = unwrapped.id
   
   const {signedUpUser, posted, fetchPostDetails } = useContext(NextContext) 
-   
+   const [showInput, setShowInput] = useState(false)
 const addComment = async () => {
  try{
   const response = await fetch(`api/post/${id}`, {
@@ -33,6 +33,7 @@ const addComment = async () => {
    if(response.ok){
       alert('comment posted')
        setComment('')
+       setShowInput(false)
        fetchPostDetails(id)
     }
  }catch(error){
@@ -68,9 +69,22 @@ const addComment = async () => {
        <p>{posted.post}</p>
        <span>{posted.tag}</span>
      </div>
+     <div className='detailedPost-count'>
+       <span>3 Likes</span>
+       <button
+         onClick={setShowInput(true)}>Add Comment</button>
+     </div>
       {/*comments*/}
      <div className='detailedPost-comment'>
-       <div className='comment-input'>
+       {showInput && 
+        <div className='comment-input'>
+        {signedUpUser?.image && 
+        <Image 
+         width={20} 
+         height={20} 
+         style = {{borderRadius: '50%', objectFit : 'cover'}}
+         src={signedUpUser?.image}
+             alt='profile'/>}
          <input 
            type='text'
            placeholder='Add a comment'
@@ -79,7 +93,7 @@ const addComment = async () => {
          <button onClick={addComment}>
            <CiLocationArrow1 />
          </button>
-       </div>
+       </div>}
        <div className='comments'>
          {posted.comments?.map((comment, index) => (
           <div key={index} className='comment'>

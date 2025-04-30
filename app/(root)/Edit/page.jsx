@@ -9,22 +9,51 @@ const Edit = ({params}) => {
   const unwrapped = use(params)
   const postId = unwrapped.id
   
-  const { editPost, edit, setEdit,  isEditting, submitEditPost } = useContext(NextContext)
+  const { edit, setEdit,  isEditting} = useContext(NextContext)
   
-    const handleSubmit = async (e) => {
+  
+  useEffect(() => {
+    const getEditDetails = async () => {
+      const response = await fetch(`/api/post/${postId}`)
+      const data = await response.json()
+      setEdit({
+        post: data.post,
+        tag: data.tag
+      })
+    }
+    if(postId) getEditDetails
+  }, [postId])
+  
+  
+  const submitEditPost = async () => {
+ try{
+  const response = await fetch(`/api/post/${postId}/edit`, {
+  method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ 
+    post:edit.post,
+    tag: edit.tag
+   }),
+ })
+ const data = await response.json()
+   if(response.ok){
+      alert('post edited')
+    setEdit({
+      post: '',
+      tag: ''  
+      })
+    }
+ }catch(error){
+   console.log(error)
+ }
+} 
+const handleSubmit = async (e) => {
     e.preventDefault()
     await submitEditPost(postId)
   }
-  useEffect(() => {
-   const getEditting = async () => {
-     const res = await fetch(`api/post/${postId}`)
-     const data = await res.json()
-     setEdit({
-       post: data.post,
-       tag: data.tag
-   })
-   }
- }, [postId])
+  
  
   return(
     <div>
@@ -37,12 +66,15 @@ const Edit = ({params}) => {
         <textarea
            type='text'
            placeholder='Write a post'
-           value= "of course"
+           value= {edit.post}
+           onChange={(e) => {setEdit({...edit, post: e.target.value})}}
            >
         </textarea>
         <input
            type='text'
            placeholder='Write a post tag' 
+           value= {edit.tag}
+           onChange={(e) => {setEdit({...edit, tag: e.target.value})}}
            />
          <div className='post-btn'>
             <button>Save</button>

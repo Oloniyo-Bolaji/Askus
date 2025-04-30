@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import {getAuth, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCJ3gcu-HhHWz9mIeJB5HIYSzGA-3-21VQ",
-  authDomain: "askus-59b6a.firebaseapp.com",
-  projectId: "askus-59b6a",
-  storageBucket: "askus-59b6a.firebasestorage.app",
-  messagingSenderId: "323639682775",
-  appId: "1:323639682775:web:af2a70da4566d6884e3292",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   measurementId: "G-NZC3XXWVR7"
 };
 

@@ -6,11 +6,29 @@ import Image from 'next/image'
 import './styles.css'
 import {useRouter, usePathname} from 'next/navigation';
 
-const PostCard = ({post, fetchPostDetails, editPost, deletePost}) => {
+const PostCard = ({post, fetchPostDetails}) => {
  const router = useRouter()
  const pathname = usePathname()
  
  
+ const editPost = async (post) => {
+   router.push(`/Edit?id=${post._id}`)
+}
+
+ const deletePost = async (id) => {
+  if(!confirm("Are you sure?")) return;
+ try{
+  const response = await fetch(`/api/post/${id}`, {
+  method: 'DELETE',
+ })
+ const data = await response.json()
+   if(response.ok){
+     alert('post deleted')
+   }
+ }catch(error){
+   console.log(error)
+ }
+}
   return (
     <div className='post'>
       <div className='creator'>
@@ -40,7 +58,7 @@ const PostCard = ({post, fetchPostDetails, editPost, deletePost}) => {
       {pathname === '/Profile' && <div className="btns">
         <button 
          className="edit-btn"
-         onClick={() => {editPost(post._id.toString())}}>Edit</button>
+         onClick={() => {editPost(post)}}>Edit</button>
         <button 
           className="delete-btn"
           onClick={() => {deletePost(post._id.toString())}}>Delete</button>

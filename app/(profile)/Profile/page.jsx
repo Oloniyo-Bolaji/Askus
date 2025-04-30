@@ -10,7 +10,7 @@ import {useRouter} from 'next/navigation'
 
 const Profile = () => {
   const router = useRouter()
-   const {userPost, setUserPost, signedUpUser, userPosts, userComments, logOut, editPost, deletePost } = useContext(NextContext)
+   const {userPost, setUserPost, signedUpUser, userPosts, userComments, logOut} = useContext(NextContext)
 
 
   
@@ -39,9 +39,7 @@ const Profile = () => {
         return (
           <PostCard 
             key={index} 
-            post={post}
-            editPost={editPost} 
-            deletePost={deletePost} />);
+            post={post} />);
         })}
        </div>)}
    </div>

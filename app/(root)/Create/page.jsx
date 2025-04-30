@@ -7,7 +7,7 @@ import '../../globals.css'
    
 const Create = () => {
   
-  const { CreatePost, submitting,  userPost, setUserPost, isEditting, submitEditPost } = useContext(NextContext)
+  const { CreatePost, submitting,  userPost, setUserPost } = useContext(NextContext)
   
     const handleSubmit = async (e) => {
     e.preventDefault()
@@ -34,7 +34,7 @@ const Create = () => {
            value={userPost.tag}
            onChange={(e) => {setUserPost({...userPost, tag: e.target.value})}}/>
          <div className='post-btn'>
-            <button>{isEditting ? 'Save' : 'Post'}</button>
+            <button>{submitting ? 'Posting...' : 'Post'}</button>
           </div>
       </form>
     </div>

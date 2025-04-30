@@ -10,7 +10,7 @@ const NextContext = createContext();
 
 const NextProvider = ({ children }) => {
   const router= useRouter()
-  const [isUser, setIsUser] = useState(false)
+  const [signedUpUser, setSignedUpUser] = useState()
   const [userPost, setUserPost] = useState({
     post: '',
     tag: ''
@@ -26,95 +26,49 @@ const NextProvider = ({ children }) => {
   const [isEditting, setIsEditting] = useState(false)
   const [posts, setPosts] = useState([])
   const [posted, setPosted] = useState({})
-  const [signedUpUser, setSignedUpUser] = useState(null)
   
   
-
 const loginWithGoogle = async () => {
-  try {
-    const result = await signInWithPopup(auth, googleProvider);
-    const user = result.user;
-    const checkUser = await fetch(`/api/auth/${user.uid}`);
-    if (checkUser.ok) {
-      alert('User already exists.');
-      const data = await checkUser.json();
-      setSignedUpUser(data);
-    } else {
-      const response = await fetch('/api/auth', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          uid: user.uid,
-          email: user.email,
-          username: user.displayName,
-          number: user.phoneNumber,
-          image: user.photoURL,
-        }),
-      });
-      if (response.ok) {
-        console.log('New user created and saved to MongoDB.');
-        alert('Signed in successfully!');
-        const data = await response.json();
-        setSignedUpUser(data);
-      } else {
-        console.log('Error saving user:', response.status);
-      }
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      setSignedUpUser(result.user)
+      setUserId(user.uid)
+      alert('signin successful')
+    } catch (error) {
+      console.error("Login error", error);
     }
-  } catch (err) {
-    console.error('Login error:', err);
-    alert('Login failed. Please try again.');
-  }
-};
-
+  };
+  
 const logOut = async () => {
-  try {
-    await signOut(auth);
-    setUserId('');
-    setSignedUpUser(null);
-    console.log('Logged out successfully.');
-  } catch (error) {
-    console.error('Logout error:', error);
-  }
-};
-
-useEffect(() => {
-  const unsubscribe = onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      setUserId(user.uid);
-      try {
-        const response = await fetch(`/api/auth/${user.uid}`);
-        if (response.ok) {
-          const data = await response.json();
-          setSignedUpUser(data);
-        } else {
-          setSignedUpUser(null);
-          console.log('User not found in database.');
-        }
-      } catch (error) {
-        console.error('Failed to fetch user:', error);
-        setSignedUpUser(null);
-      }
-    } else {
-      setUserId('');
+    try {
+      await signOut(auth);
       setSignedUpUser(null);
+      setUserId('');
+      alert('Logged out successfully.');
+    } catch (error) {
+      console.error("Logout error", error);
     }
-  });
-  return () => unsubscribe();
-}, []);
+  };
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUserId(currentUser.uid);
+      setSignedUpUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+  
   const CreatePost = async () => {
     try{
     const response = await fetch('/api/post/new', {
       method: 'POST',
       body: JSON.stringify({
         creator: {
-          uid: signedUpUser.uid,
-          username: signedUpUser.displayName,
-          email: signedUpUser.email,
-          number: signedUpUser.phoneNumber,
-          image: signedUpUser.photoURL
+          uid: signedUpUser?.uid,
+          username: signedUpUser?.displayName,
+          email: signedUpUser?.email,
+          number: signedUpUser?.phoneNumber,
+          image: signedUpUser?.photoURL
         },
         post: userPost.post,
         tag: userPost.tag
@@ -134,48 +88,7 @@ useEffect(() => {
     }
   }
  
-  const editPost = async (id) => {
-   setIsEditting(true)
-   router.push(`/Edit?id=${id}`)
-}
- 
-  const submitEditPost = async (id) => {
- try{
-  const response = await fetch(`api/post/${id}/edit`, {
-  method: 'PATCH',
-  body: JSON.stringify({ 
-    post:edit.post,
-    tag: edit.tag
-   }),
- })
- const data = await response.json()
-   if(response.ok){
-      alert('post edited')
-    setEdit({
-      post: '',
-      tag: ''  
-      })
-    }
- }catch(error){
-   console.log(error)
- }
-} 
-
-  const deletePost = async (id) => {
-   try{
-  const response = await fetch(`api/post/${id}`, {
-  method: 'DELETE',
- })
- const data = await response.json()
-   if(response.ok){
-     alert('post deleted')
-   }
- }catch(error){
-   console.log(error)
- }
-}
-
-  useEffect(() => {
+    useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch('/api/post')
       const data = await response.json();
@@ -213,7 +126,23 @@ useEffect(() => {
 
 
   return (
-    <NextContext.Provider value={{signedUpUser,  loginWithGoogle, logOut, CreatePost, submitting, editPost, deletePost, isEditting, setIsEditting, userPost, setUserPost, userId, posts, userPosts, userComments, posted, fetchPostDetails}}>
+    <NextContext.Provider value={{
+       signedUpUser,  
+       loginWithGoogle, 
+       logOut, 
+       CreatePost, 
+       submitting, 
+       isEditting,
+       setUserPost,
+       setIsEditting, 
+       userPost, 
+       setUserPost, 
+       userId, 
+       posts, 
+       userPosts, 
+       userComments, 
+       posted, 
+       fetchPostDetails}}>
       {children}
     </NextContext.Provider>
   );

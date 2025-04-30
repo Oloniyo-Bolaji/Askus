@@ -133,6 +133,11 @@ form div button{
   font-size: 12px;
   font-weight: bold;
 }
+.detailedPost-count{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
 .detailedPost-comment{
   width: 100%;
   display: flex;
@@ -141,9 +146,13 @@ form div button{
 }
 .comment-input{
   width: 100%;
+  display: flex;
+}
+.comment-input img{
+  width: 20%;
 }
 .comment-input input{
-  width: 80%;
+  width: 60%;
   height: 35px;
   box-shadow: 1px 1px 2px #ccc;
   border: none;
