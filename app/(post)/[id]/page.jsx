@@ -29,8 +29,8 @@ const addComment = async () => {
     comment: comment
    }),
  })
- const data = await response.json()
    if(response.ok){
+     const data = await response.json()
       alert('comment posted')
        setComment('')
        setShowInput(false)
@@ -72,7 +72,7 @@ const addComment = async () => {
      <div className='detailedPost-count'>
        <span>3 Likes</span>
        <button
-         onClick={setShowInput(true)}>Add Comment</button>
+         onClick={() => {setShowInput(true)}}>Add Comment</button>
      </div>
       {/*comments*/}
      <div className='detailedPost-comment'>
