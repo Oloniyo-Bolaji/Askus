@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import {auth} from '@/utils/firebase.js'
 import {NextContext} from '@/utils/context.js'
 import PostCard from '@/components/PostCard.jsx' 
 import  "../../globals.css"
