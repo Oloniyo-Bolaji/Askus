@@ -14,6 +14,7 @@ const Post =  ({params}) => {
   
   const {signedUpUser, posted, fetchPostDetails } = useContext(NextContext) 
    const [showInput, setShowInput] = useState(false)
+   
 const addComment = async () => {
  try{
   const response = await fetch(`api/post/${id}`, {
@@ -70,7 +71,7 @@ const addComment = async () => {
        <span>{posted.tag}</span>
      </div>
      <div className='detailedPost-count'>
-       <span>3 Likes</span>
+       <span>Comments</span>
        <button
          onClick={() => {setShowInput(true)}}>Add Comment</button>
      </div>
@@ -78,13 +79,6 @@ const addComment = async () => {
      <div className='detailedPost-comment'>
        {showInput && 
         <div className='comment-input'>
-        {signedUpUser?.image && 
-        <Image 
-         width={20} 
-         height={20} 
-         style = {{borderRadius: '50%', objectFit : 'cover'}}
-         src={signedUpUser?.image}
-             alt='profile'/>}
          <input 
            type='text'
            placeholder='Add a comment'
@@ -97,8 +91,8 @@ const addComment = async () => {
        <div className='comments'>
          {posted.comments?.map((comment, index) => (
           <div key={index} className='comment'>
-           <div className='creator'>
-            <div className='creator-image'>
+            <div className="creator-image">
+              <div className='creator-image'>
              {comment.creator?.image && 
              <Image 
                width={40} 
@@ -107,14 +101,16 @@ const addComment = async () => {
                src={comment.creator?.image}
                alt='profile'/>}
             </div>
-           <div className='creator-details'>
+            </div>
+            <div className="comment-details">
+              <div className='creator-details'>
             <h6>{comment.creator?.username}</h6>
             <p>{comment.creator?.email}</p>
             </div>
-           </div>
           <div className='creator-post'>
            <p>{comment.comment}</p>
          </div>
+            </div>
       </div>
          ))}
        </div>

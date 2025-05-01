@@ -1,15 +1,19 @@
 'use client'
 
-import React, {useState, useEffect, useContext, use} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import { useSearchParams } from 'next/navigation';
 import {auth} from '@utils/firebase'
 import {NextContext} from '@/utils/context.js'
 import '../../globals.css'
    
-const Edit = ({params}) => {
-  const unwrapped = use(params)
-  const postId = unwrapped.id
-  
-  const { edit, setEdit,  isEditting} = useContext(NextContext)
+const Edit = () => {
+  const [edit, setEdit] = useState({
+    post: '',
+    tag: ''
+  }) 
+  const [isEditting, setIsEditting] = useState(false)
+const searchParams = useSearchParams();
+const postId = searchParams.get('id');
   
   
   useEffect(() => {
@@ -21,37 +25,39 @@ const Edit = ({params}) => {
         tag: data.tag
       })
     }
-    if(postId) getEditDetails
+    if(postId) getEditDetails();
   }, [postId])
   
-  
-  const submitEditPost = async () => {
- try{
-  const response = await fetch(`/api/post/${postId}/edit`, {
-  method: 'PATCH',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({ 
-    post:edit.post,
-    tag: edit.tag
-   }),
- })
- const data = await response.json()
-   if(response.ok){
-      alert('post edited')
-    setEdit({
-      post: '',
-      tag: ''  
-      })
+
+const submitEditPost = async () => {
+  try {
+    setIsEditting(true);
+
+    const response = await fetch(`/api/post/${postId}/edit`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        post: edit.post,
+        tag: edit.tag
+      }),
+    });
+
+    if (response.ok) {
+      alert('Post edited');
+      setEdit({ post: '', tag: '' });
     }
- }catch(error){
-   console.log(error)
- }
-} 
+  } catch (error) {
+    console.log(error);
+  } finally {
+    setIsEditting(false);
+  }
+};
+ 
 const handleSubmit = async (e) => {
     e.preventDefault()
-    await submitEditPost(postId)
+    await submitEditPost()
   }
   
  
@@ -77,7 +83,7 @@ const handleSubmit = async (e) => {
            onChange={(e) => {setEdit({...edit, tag: e.target.value})}}
            />
          <div className='post-btn'>
-            <button>Save</button>
+            <button>{isEditting ? 'Saving...' : 'Save'}</button>
           </div>
       </form>
     </div>

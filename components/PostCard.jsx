@@ -21,7 +21,6 @@ const PostCard = ({post, fetchPostDetails}) => {
   const response = await fetch(`/api/post/${id}`, {
   method: 'DELETE',
  })
- const data = await response.json()
    if(response.ok){
      alert('post deleted')
    }
@@ -29,6 +28,7 @@ const PostCard = ({post, fetchPostDetails}) => {
    console.log(error)
  }
 }
+
   return (
     <div className='post'>
       <div className='creator'>
@@ -61,7 +61,7 @@ const PostCard = ({post, fetchPostDetails}) => {
          onClick={() => {editPost(post)}}>Edit</button>
         <button 
           className="delete-btn"
-          onClick={() => {deletePost(post._id.toString())}}>Delete</button>
+          onClick={() => {deletePost(post._id)}}>Delete</button>
       </div>}
     </div>
   )

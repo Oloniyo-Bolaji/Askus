@@ -138,6 +138,14 @@ form div button{
   justify-content: space-between;
   padding: 10px;
 }
+.detailedPost-count span{
+  font-size: 15px;
+}
+.detailedPost-count button{
+  border: none;
+  background: none;
+  font-size: 15px;
+}
 .detailedPost-comment{
   width: 100%;
   display: flex;
@@ -148,21 +156,20 @@ form div button{
   width: 100%;
   display: flex;
 }
-.comment-input img{
-  width: 20%;
-}
 .comment-input input{
-  width: 60%;
+  width: 80%;
   height: 35px;
-  box-shadow: 1px 1px 2px #ccc;
-  border: none;
+  border: 0.5px solid #ccc;
+  padding: 5px;
 }
 .comment-input button{
   width: 20%;
   height: 35px;
   border: none;
   background: none;
-  color: #2196f340;
+  color: #ffc107;
+  font-size: 30px;
+  font-weight: bold;
 }
 .comments{
   display: grid;
@@ -171,8 +178,19 @@ form div button{
 }
 .comment{
   width: 100%;
+  display: flex;
+  gap: 10px;
   padding: 10px 5px;
   border-bottom: 0.5px solid black;
+}
+.creator-image{
+  width: 20%;
+}
+.comment-details{
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 .profileHero{
   height: 400px;

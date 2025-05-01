@@ -17,13 +17,8 @@ const NextProvider = ({ children }) => {
   })
   const [userId, setUserId] = useState('')
   const [userPosts, setUserPosts] = useState([])
-  const [edit, setEdit] = useState({
-    post: '',
-    tag: ''
-  })
   const [userComments, setUserComments] = useState([])
   const [submitting, setSubmitting] = useState(false)
-  const [isEditting, setIsEditting] = useState(false)
   const [posts, setPosts] = useState([])
   const [posted, setPosted] = useState({})
   
@@ -31,7 +26,8 @@ const NextProvider = ({ children }) => {
 const loginWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      setSignedUpUser(result.user)
+      const user = result.user
+      setSignedUpUser(user)
       setUserId(user.uid)
       alert('signin successful')
     } catch (error) {
@@ -59,34 +55,38 @@ const logOut = async () => {
   }, []);
   
   const CreatePost = async () => {
-    try{
+  try {
+    setSubmitting(true); 
+
     const response = await fetch('/api/post/new', {
       method: 'POST',
       body: JSON.stringify({
         creator: {
-          uid: signedUpUser?.uid,
-          username: signedUpUser?.displayName,
-          email: signedUpUser?.email,
-          number: signedUpUser?.phoneNumber,
-          image: signedUpUser?.photoURL
+          uid: signedUpUser.uid,
+          username: signedUpUser.displayName,
+          email: signedUpUser.email,
+          number: signedUpUser.phoneNumber,
+          image: signedUpUser.photoURL
         },
         post: userPost.post,
         tag: userPost.tag
       })
-    })
-    setSubmitting(true)
-    if(response.ok){
-      alert('new post made')
+    });
+
+    if (response.ok) {
+      alert('New post made');
       setUserPost({
-      post: '',
-      tag: ''  
-      })
-      setSubmitting(false)
+        post: '',
+        tag: ''
+      });
     }
-    }catch(error){
-      console.log(error)
-    }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    setSubmitting(false);
   }
+};
+
  
     useEffect(() => {
     const fetchPosts = async () => {
@@ -132,9 +132,7 @@ const logOut = async () => {
        logOut, 
        CreatePost, 
        submitting, 
-       isEditting,
        setUserPost,
-       setIsEditting, 
        userPost, 
        setUserPost, 
        userId, 
