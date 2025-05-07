@@ -8,16 +8,21 @@ import {useState,
     useContext}
 from 'react'
 import PostCard from '@/components/PostCard.jsx'
-import {NextContext} from '@/utils/context.js'
 import '../globals.css';
 
 export default function Home() {
+ const [posts, setPosts] = useState([])
+
  
- const { posts, fetchPostDetails } = useContext(NextContext) 
- const tags = [
-   "Relationship", "Marriage", "Work", "Family",  "Business", "Finance"
-   ]
-  
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await fetch('/api/post')
+      const data = await response.json();
+      setPosts(data)
+    }
+    fetchPosts()
+  })
+   
   return (
     <>
       <div className='hero'>
@@ -49,7 +54,7 @@ export default function Home() {
       <PostCard
         key={index} 
         post={post}
-        fetchPostDetails={fetchPostDetails} />
+     />
     ))}
    </div>
     </>

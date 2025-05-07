@@ -26,6 +26,11 @@
   color: black;
   background: #ffc107;
 }
+.register-btn:hover{
+  border: #ffc107;
+  color: #ffc107;
+  background: white;
+}
 .profilenav{
   height: 50px;
   display: flex;

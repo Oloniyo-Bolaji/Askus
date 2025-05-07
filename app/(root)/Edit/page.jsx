@@ -2,18 +2,18 @@
 
 import React, {useState, useEffect, useContext} from 'react'
 import { useSearchParams } from 'next/navigation';
-import {auth} from '@utils/firebase'
-import {NextContext} from '@/utils/context.js'
 import '../../globals.css'
-   
+import Notify from 'simple-notify'
+import 'simple-notify/dist/simple-notify.css'
+
 const Edit = () => {
   const [edit, setEdit] = useState({
     post: '',
     tag: ''
   }) 
   const [isEditting, setIsEditting] = useState(false)
-const searchParams = useSearchParams();
-const postId = searchParams.get('id');
+ const searchParams = useSearchParams();
+ const postId = searchParams.get('id');
   
   
   useEffect(() => {
@@ -21,6 +21,7 @@ const postId = searchParams.get('id');
       const response = await fetch(`/api/post/${postId}`)
       const data = await response.json()
       setEdit({
+        title: data.title,
         post: data.post,
         tag: data.tag
       })
@@ -39,14 +40,29 @@ const submitEditPost = async () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        title: edit.title,
         post: edit.post,
-        tag: edit.tag
+        tag: edit.tag,
+        isEdited: true
       }),
     });
 
     if (response.ok) {
-      alert('Post edited');
-      setEdit({ post: '', tag: '' });
+      new Notify({
+       status: 'success',
+       text: 'Edited',
+       effect: 'slide',
+       speed: 300,
+       showIcon: true,
+       showCloseButton: true,
+       autoclose: true,
+       autotimeout: 3000,
+       gap: 20,
+       distance: 20,
+       type: 'outline',
+       position: 'right top'
+    })
+      setEdit({ title: '', post: '', tag: '' });
     }
   } catch (error) {
     console.log(error);
@@ -69,6 +85,11 @@ const handleSubmit = async (e) => {
       </div>
       
       <form onSubmit={handleSubmit}>
+        <input
+           type='text'
+           placeholder='Write a post tag' 
+           value={edit.title}
+           onChange={(e) => {setEdit({...edit, title: e.target.value})}}/>
         <textarea
            type='text'
            placeholder='Write a post'

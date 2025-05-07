@@ -6,7 +6,7 @@ import Image from 'next/image'
 import './styles.css'
 import {useRouter, usePathname} from 'next/navigation';
 
-const PostCard = ({post, fetchPostDetails}) => {
+const PostCard = ({post, deletePost}) => {
  const router = useRouter()
  const pathname = usePathname()
  
@@ -15,19 +15,6 @@ const PostCard = ({post, fetchPostDetails}) => {
    router.push(`/Edit?id=${post._id}`)
 }
 
- const deletePost = async (id) => {
-  if(!confirm("Are you sure?")) return;
- try{
-  const response = await fetch(`/api/post/${id}`, {
-  method: 'DELETE',
- })
-   if(response.ok){
-     alert('post deleted')
-   }
- }catch(error){
-   console.log(error)
- }
-}
 
   return (
     <div className='post'>
@@ -47,7 +34,7 @@ const PostCard = ({post, fetchPostDetails}) => {
         </div>
       </div>
       <div className='creator-post'>
-        <p>{post.post.slice(0, 100)}...<button 
+        <p>{post.post.slice(0, 150)}...<button 
          onClick={() => {router.push(`/${post._id.toString()}`)
         }}>Read More</button></p>
       </div>

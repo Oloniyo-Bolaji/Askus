@@ -2,13 +2,14 @@
 
 import React, { useState, useEffect, useContext } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import './styles.css'
-import {NextContext} from '@/utils/context.js'
 import { FaUser } from "react-icons/fa";
+import { useSession, signIn } from 'next-auth/react';
 
 
 const Navbar = () => {
-   const { signedUpUser, loginWithGoogle, logOut } = useContext(NextContext)
+   const {data: session} = useSession()
 
   return (
     <nav className="navbar">
@@ -16,16 +17,22 @@ const Navbar = () => {
         <Link href="/">Ask<span>US</span></Link>
       </div>
       <div>
-        {signedUpUser ? (
+        {session ? (
         <div>
           <Link href='/Profile'>
-            <FaUser />
+            {session.user?.image && (<Image 
+             width={20} 
+             height={20} 
+             style = {{borderRadius: '50%', objectFit : 'cover'}}
+             src={session.user.image}
+             alt='profile'/>)}
           </Link>
         </div>
         ) : (
-          <button 
+         <button 
             className='register-btn'
-            onClick={loginWithGoogle}>Sign In</button>
+            onClick={() => signIn("google")}
+          >Sign In</button>
         )}
       </div>
     </nav>

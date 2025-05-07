@@ -1,15 +1,15 @@
 'use client'
 
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import './styles.css'
 import {useRouter, usePathname} from 'next/navigation';
-import {NextContext} from '@/utils/context.js'
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { IoIosLogOut } from "react-icons/io";
+import { useSession, signOut } from 'next-auth/react';
 
 const ProfileNav = () => {
-  const {logOut} = useContext(NextContext)
+   const {data: session} = useSession()
    const router = useRouter()
    
    
@@ -25,11 +25,12 @@ const ProfileNav = () => {
        <p>My Profile</p>
      </div>
      <div>
-       <button
-         onClick={logOut}
-         className="logout-btn">
-         <IoIosLogOut />
-       </button>
+         <button 
+            className='logout-btn'
+            onClick={() => signOut()}
+          >
+           <IoIosLogOut />
+          </button>
      </div>
    </nav>
   )

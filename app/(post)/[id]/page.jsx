@@ -1,31 +1,46 @@
 'use client'
 
-import React, { useState, useEffect, use, useContext } from 'react';
-import {NextContext} from '@/utils/context.js'
+import React, { useState, useEffect, use } from 'react';
 import Image from 'next/image'
 import '../../globals.css'
 import { CiLocationArrow1 } from "react-icons/ci";
+import { useSession } from "next-auth/react"
 
 
-const Post =  ({params}) => {
-  const [comment, setComment] = useState('')
+const Post = ({params}) => {
+  const {data: session} = useSession()
+  const user = session?.user
   const unwrapped = use(params)
   const id = unwrapped.id
   
-  const {signedUpUser, posted, fetchPostDetails } = useContext(NextContext) 
+   const [comment, setComment] = useState('')
    const [showInput, setShowInput] = useState(false)
+   const [posted, setPosted] = useState({})
+ //  const [isLoaded, setIsLoaded] = useState(false)
+  
+  const fetchPostDetails = async (id) => {
+     const res = await fetch(`/api/post/${id}`)
+     const data = await res.json()
+     console.log(data)
+     setPosted(data)
+   }
+   
+   useEffect(() => {
+    fetchPostDetails(id)
+  }, [id])
+   
    
 const addComment = async () => {
+  if (!user) return <p>Please Sign In</p>
  try{
   const response = await fetch(`api/post/${id}`, {
   method: 'PATCH',
   body: JSON.stringify({ 
     creator: {
-     uid: signedUpUser?.uid,
-     username: signedUpUser?.displayName,
-     email: signedUpUser?.email,
-     number: signedUpUser?.phoneNumber,
-     image:signedUpUser?.photoURL
+      id: user.id,
+     username: user.name,
+     email: user.email,
+     image: user.image
         },
     comment: comment
    }),
@@ -42,9 +57,7 @@ const addComment = async () => {
  }
 }
 
-  useEffect(() => {
-    fetchPostDetails(id)
-  }, [id])
+  
   
   
   return(
@@ -66,12 +79,15 @@ const addComment = async () => {
       </div>
      </div>
      {/*post*/}
+     <div>
+       <h2>{posted.title}</h2>
+     </div>
      <div className='detailedPost-post'>
        <p>{posted.post}</p>
        <span>{posted.tag}</span>
      </div>
      <div className='detailedPost-count'>
-       <span>Comments</span>
+       <span>{posted.comments?.length} {posted.comments?.length > 1 ? 'Comments' : 'Comment'}</span>
        <button
          onClick={() => {setShowInput(true)}}>Add Comment</button>
      </div>

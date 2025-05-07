@@ -1,14 +1,30 @@
-import {Schema, model, models} from 'mongoose'
+import mongoose, {Schema, model, models} from 'mongoose'
+
+const CreatorSchema = new Schema({
+  id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
+  },
+  email: {
+    type: String,
+    required: [true, 'Email is required'],
+  },
+  username: {
+    type: String,
+    required: true
+  },
+  image: {
+    type: String,
+    required: true
+  }
+}, {
+  _id: false  
+});
+
 
 const CommentSchema = new Schema({
   creator:{
-    type: {
-      uid: String,
-      username: String,
-      email: String,
-      number: String,
-      image:String
-    },
+    type: CreatorSchema,
     required:true
   },
   comment:{
@@ -23,14 +39,12 @@ const CommentSchema = new Schema({
 
 const PostSchema = new Schema({
   creator:{
-    type: {
-      uid: String,
-      username: String,
-      email: String,
-      number: String,
-      image:String
-    },
+    type: CreatorSchema,
     required:true
+  },
+  title:{
+    type: String,
+    required: false
   },
   post:{
     type: String,
@@ -46,6 +60,7 @@ const PostSchema = new Schema({
   },
   isEdited: {
     type: Boolean,
+    default: false
   }
 },
 {
@@ -54,5 +69,5 @@ const PostSchema = new Schema({
 )
 
 
- const Post = models.Post || model('Post', PostSchema)
+ const Post = mongoose.models.Post || mongoose.model('Post', PostSchema)
  export default Post;

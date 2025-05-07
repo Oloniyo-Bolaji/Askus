@@ -1,6 +1,6 @@
 import "../globals.css";
 import Navbar from '@/components/Navbar.jsx'
-import { NextProvider } from '@/utils/context.js'
+import { useSession, SessionProvider } from 'next-auth/react';
 
 
 export const metadata = {
@@ -12,10 +12,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <NextProvider> 
-           <Navbar />
+         <SessionProvider>       
+           {/*<Navbar />*/}
            {children}
-        </NextProvider>
+         </SessionProvider>          
       </body>
     </html>
   );

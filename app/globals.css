@@ -88,6 +88,7 @@ form input{
   border-radius: 10px;
   padding: 5px;
   border: 0.5px solid black;
+  margin: 5px 0;
 }
 form div{
   display:flex ;
@@ -166,8 +167,8 @@ form div button{
   width: 20%;
   height: 35px;
   border: none;
-  background: none;
-  color: #ffc107;
+  background: #ffc107;
+  color: black;
   font-size: 30px;
   font-weight: bold;
 }

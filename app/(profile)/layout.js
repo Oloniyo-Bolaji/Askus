@@ -1,16 +1,15 @@
 import "../globals.css";
-import { NextProvider } from '@/utils/context.js'
 import ProfileNav from '@components/ProfileNav.jsx'
-
+import { useSession, SessionProvider } from 'next-auth/react';
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <NextProvider> 
+          <SessionProvider>             
            <ProfileNav />
            {children}
-        </NextProvider>
+           </SessionProvider>                
       </body>
     </html>
   );
