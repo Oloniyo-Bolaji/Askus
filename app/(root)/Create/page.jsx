@@ -4,8 +4,7 @@ import React, {useState, useEffect, useContext} from 'react'
 import '../../globals.css'
 import { useSession } from "next-auth/react"
 import {useRouter} from 'next/navigation';
-import Notify from 'simple-notify'
-import 'simple-notify/dist/simple-notify.css'
+
 
 const Create = () => {
   const router = useRouter()
@@ -22,7 +21,7 @@ const Create = () => {
   
   const CreatePost = async () => {
   if (!user){
-    console.log('not a user')
+    alert('not a user')
     
   }
   try {
@@ -44,40 +43,14 @@ const Create = () => {
     });
 
     if (response.ok) {
-      new Notify({
-       status: 'success',
-       text: 'Succesfully uploaded a post',
-       effect: 'slide',
-       speed: 300,
-       showIcon: true,
-       showCloseButton: true,
-       autoclose: true,
-       autotimeout: 3000,
-       gap: 20,
-       distance: 20,
-       type: 'outline',
-       position: 'right top'
-    })
+      alert('Post made')
       setUserPost({
+        title: '',
         post: '',
         tag: ''
       });
     }
   } catch (error) {
-    new Notify({
-       status: 'danger',
-       text: error.message,
-       effect: 'slide',
-       speed: 300,
-       showIcon: true,
-       showCloseButton: true,
-       autoclose: true,
-       autotimeout: 3000,
-       gap: 20,
-       distance: 20,
-       type: 'outline',
-       position: 'right top'
-    })
     console.log(error);
   } finally {
     setSubmitting(false);

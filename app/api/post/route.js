@@ -1,6 +1,5 @@
 import { connecttoDb } from '@utils/database.js';
 import Post from '@models/post.js';
-//import User from '@models/user.js';
 
 
 

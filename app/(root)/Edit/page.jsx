@@ -3,11 +3,11 @@
 import React, {useState, useEffect, useContext} from 'react'
 import { useSearchParams } from 'next/navigation';
 import '../../globals.css'
-import Notify from 'simple-notify'
-import 'simple-notify/dist/simple-notify.css'
+
 
 const Edit = () => {
   const [edit, setEdit] = useState({
+    title: '',
     post: '',
     tag: ''
   }) 
@@ -48,20 +48,7 @@ const submitEditPost = async () => {
     });
 
     if (response.ok) {
-      new Notify({
-       status: 'success',
-       text: 'Edited',
-       effect: 'slide',
-       speed: 300,
-       showIcon: true,
-       showCloseButton: true,
-       autoclose: true,
-       autotimeout: 3000,
-       gap: 20,
-       distance: 20,
-       type: 'outline',
-       position: 'right top'
-    })
+      alert('post has been edited')
       setEdit({ title: '', post: '', tag: '' });
     }
   } catch (error) {

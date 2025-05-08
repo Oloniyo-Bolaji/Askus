@@ -16,7 +16,7 @@ const Post = ({params}) => {
    const [comment, setComment] = useState('')
    const [showInput, setShowInput] = useState(false)
    const [posted, setPosted] = useState({})
- //  const [isLoaded, setIsLoaded] = useState(false)
+
   
   const fetchPostDetails = async (id) => {
      const res = await fetch(`/api/post/${id}`)

@@ -17,7 +17,7 @@ export const PATCH = async (req, {params}) => {
    existingPost.tag = tag
    existingPost.isEdited = true
     await existingPost.save();
-    return new Response(JSON.stringify(post), { status: 200 });
+    return new Response(JSON.stringify(existingPost), { status: 200 });
   } catch (error) {
     console.log(error);
     return new Response('Error updating post', { status: 500 });

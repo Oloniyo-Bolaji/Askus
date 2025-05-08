@@ -3,7 +3,7 @@ import Post from '@models/post.js';
 
 export const POST = async (req) => {
   try {
-    const { creator,title, post, tag } = await req.json();
+    const { creator, title, post, tag } = await req.json();
 
     if (!creator || !post) {
       return new Response('Missing required fields', { status: 400 });
