@@ -27,7 +27,7 @@ const ProfileNav = () => {
      <div>
          <button 
             className='logout-btn'
-            onClick={() => signOut()}
+            onClick={() => signOut({redirectTo: '/'})}
           >
            <IoIosLogOut />
           </button>

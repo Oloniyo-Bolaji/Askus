@@ -3,9 +3,10 @@
 import React, {useState, useEffect, useContext} from 'react'
 import { useSearchParams } from 'next/navigation';
 import '../../globals.css'
-
+import {useRouter} from 'next/navigation';
 
 const Edit = () => {
+  const router = useRouter()
   const [edit, setEdit] = useState({
     title: '',
     post: '',
@@ -49,6 +50,7 @@ const submitEditPost = async () => {
 
     if (response.ok) {
       alert('post has been edited')
+      router.push('/Profile')
       setEdit({ title: '', post: '', tag: '' });
     }
   } catch (error) {

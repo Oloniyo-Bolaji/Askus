@@ -22,7 +22,6 @@ const Create = () => {
   const CreatePost = async () => {
   if (!user){
     alert('not a user')
-    
   }
   try {
     setSubmitting(true); 
@@ -44,6 +43,7 @@ const Create = () => {
 
     if (response.ok) {
       alert('Post made')
+      router.push('/')
       setUserPost({
         title: '',
         post: '',
@@ -52,6 +52,7 @@ const Create = () => {
     }
   } catch (error) {
     console.log(error);
+    alert(error.message)
   } finally {
     setSubmitting(false);
   }
